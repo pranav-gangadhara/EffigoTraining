@@ -1,0 +1,397 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\prana> cd C:\Users\prana\Downloads\EffigoInternship\GitPractice
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> ls
+
+
+    Directory: C:\Users\prana\Downloads\EffigoInternship\GitPractice
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         1/13/2025  10:46 AM             37 practice.txt
+
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   practice.txt
+        new file:   practice.txt.txt
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    practice.txt.txt
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git rm -f practice.txt.txt
+rm 'practice.txt.txt'
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   practice.txt
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> touch nwj.txt
+touch : The term 'touch' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ touch nwj.txt
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (touch:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> touch nwj.py
+touch : The term 'touch' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ touch nwj.py
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (touch:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> echo. > filename.txt
+echo. : The term 'echo.' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ echo. > filename.txt
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (echo.:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> rm practice.txt
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> ls
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> ls
+
+
+    Directory: C:\Users\prana\Downloads\EffigoInternship\GitPractice
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----         1/13/2025  11:02 AM              0 practice.txt
+
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   practice.txt
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   practice.txt
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git add .
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   practice.txt
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git commit -m "Practice commit"
+[master (root-commit) a0e23e3] Practice commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 practice.txt
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git log
+commit a0e23e3685d07ddb8382f7e6480ad2379552da0a (HEAD -> master)
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 11:09:42 2025 +0530
+
+    Practice commit
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git log
+commit a0e23e3685d07ddb8382f7e6480ad2379552da0a (HEAD -> master)
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 11:09:42 2025 +0530
+
+    Practice commit
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout a0e23e3685d07ddb8382f7e6480ad2379552da0a
+Note: switching to 'a0e23e3685d07ddb8382f7e6480ad2379552da0a'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at a0e23e3 Practice commit
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout master
+Switched to branch 'master'
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git log
+commit a0e23e3685d07ddb8382f7e6480ad2379552da0a (HEAD -> master)
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 11:09:42 2025 +0530
+
+    Practice commit
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> rm practice.txt
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        deleted:    practice.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git add .
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> mkdir src
+
+
+    Directory: C:\Users\prana\Downloads\EffigoInternship\GitPractice
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         1/13/2025  11:54 AM                src
+
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> mkdir lib
+
+
+    Directory: C:\Users\prana\Downloads\EffigoInternship\GitPractice
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----         1/13/2025  11:54 AM                lib
+
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> cd src
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice\src> cd ..
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        deleted:    practice.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        lib/
+        src/
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git add .
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch master
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   lib/pranav.txt
+        deleted:    practice.txt
+        new file:   src/practice.txt
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git commit -m"Initial commit"
+[master 9597f8e] Initial commit
+ 3 files changed, 1 deletion(-)
+ create mode 100644 lib/pranav.txt
+ delete mode 100644 practice.txt
+ create mode 100644 src/practice.txt
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout -b dev
+Switched to a new branch 'dev'
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout master
+Switched to branch 'master'
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git branch bugs
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout bugs
+Switched to branch 'bugs'
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git branch -a
+* bugs
+  dev
+  master
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout master
+Switched to branch 'master'
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git branch -d bugs
+Deleted branch bugs (was 9597f8e).
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git branch -a
+  dev
+* master
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout dev
+Switched to branch 'dev'
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch dev
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   lib/pranav.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git add .
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch dev
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   lib/pranav.txt
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git commit -m"Dummy Commit"
+[dev eea82de] Dummy Commit
+ 1 file changed, 1 insertion(+)
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch dev
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   src/practice.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git add .
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git commit -m"Dummy Commit 2"
+[dev 79a6bdc] Dummy Commit 2
+ 1 file changed, 1 insertion(+)
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git log
+commit 79a6bdc104d667e828fbf2f03ebf862b374a6c64 (HEAD -> dev)
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 12:09:41 2025 +0530
+
+    Dummy Commit 2
+
+commit eea82de6587bd53aa7cc4e4883c82c89379a7008
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 12:07:12 2025 +0530
+
+    Dummy Commit
+
+commit 9597f8e803c07e814794ba022292d53ccac8ce01 (master)
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 11:57:26 2025 +0530
+
+    Initial commit
+
+commit a0e23e3685d07ddb8382f7e6480ad2379552da0a
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 11:09:42 2025 +0530
+
+    Practice commit
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout -a
+error: unknown switch `a'
+usage: git checkout [<options>] <branch>
+   or: git checkout [<options>] [<branch>] -- <file>...
+
+    -b <branch>           create and checkout a new branch
+    -B <branch>           create/reset and checkout a branch
+    -l                    create reflog for new branch
+    --[no-]guess          second guess 'git checkout <no-such-branch>' (default)
+    --[no-]overlay        use overlay mode (default)
+    -q, --[no-]quiet      suppress progress reporting
+    --[no-]recurse-submodules[=<checkout>]
+                          control recursive updating of submodules
+    --[no-]progress       force progress reporting
+    -m, --[no-]merge      perform a 3-way merge with the new branch
+    --[no-]conflict <style>
+                          conflict style (merge, diff3, or zdiff3)
+    -d, --[no-]detach     detach HEAD at named commit
+    -t, --[no-]track[=(direct|inherit)]
+                          set branch tracking configuration
+    -f, --[no-]force      force checkout (throw away local modifications)
+    --[no-]orphan <new-branch>
+                          new unborn branch
+    --[no-]overwrite-ignore
+                          update ignored files (default)
+    --[no-]ignore-other-worktrees
+                          do not check if another worktree is holding the given ref
+    -2, --ours            checkout our version for unmerged files
+    -3, --theirs          checkout their version for unmerged files
+    -p, --[no-]patch      select hunks interactively
+    --[no-]ignore-skip-worktree-bits
+                          do not limit pathspecs to sparse entries only
+    --[no-]pathspec-from-file <file>
+                          read pathspec from file
+    --[no-]pathspec-file-nul
+                          with --pathspec-from-file, pathspec elements are separated with NUL character
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git branch -a
+* dev
+  master
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout dev
+Already on 'dev'
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch dev
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        src/version.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git add .
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice>  got status
+got : The term 'got' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the
+spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:2
++  got status
++  ~~~
+    + CategoryInfo          : ObjectNotFound: (got:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch dev
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   src/version.txt
+
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git commit -m"Release Version 3.0"
+[dev 0752cad] Release Version 3.0
+ 1 file changed, 1 insertion(+)
+ create mode 100644 src/version.txt
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git checkout master
+Switched to branch 'master'
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git status
+On branch master
+nothing to commit, working tree clean
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git merge dev
+Updating 9597f8e..0752cad
+Fast-forward
+ lib/pranav.txt   | 1 +
+ src/practice.txt | 1 +
+ src/version.txt  | 1 +
+ 3 files changed, 3 insertions(+)
+ create mode 100644 src/version.txt
+PS C:\Users\prana\Downloads\EffigoInternship\GitPractice> git log
+commit 0752cad49ad7fe5560fc8883e5332e9d18153aa3 (HEAD -> master, dev)
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 12:19:38 2025 +0530
+
+    Release Version 3.0
+
+commit 79a6bdc104d667e828fbf2f03ebf862b374a6c64
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 12:09:41 2025 +0530
+
+    Dummy Commit 2
+
+commit eea82de6587bd53aa7cc4e4883c82c89379a7008
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 12:07:12 2025 +0530
+
+    Dummy Commit
+
+commit 9597f8e803c07e814794ba022292d53ccac8ce01
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 11:57:26 2025 +0530
+
+    Initial commit
+
+commit a0e23e3685d07ddb8382f7e6480ad2379552da0a
+Author: Pranav <pranavgangadhara@gmail.com>
+Date:   Mon Jan 13 11:09:42 2025 +0530
+
+    Practice commit
+(END)
