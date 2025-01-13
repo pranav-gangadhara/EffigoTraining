@@ -1,0 +1,108 @@
+# Important Git Commands
+
+## Basic Commands
+
+### Initialize a Git Repository
+- **Command:** `git init`
+- **Description:** Initializes a new Git repository in the current directory.
+
+### Clone a Repository
+- **Command:** `git clone <repository_url>`
+- **Description:** Clones an existing repository from a remote server.
+
+## Working with Changes
+
+### Check Status
+- **Command:** `git status`
+- **Description:** Shows the current status of the repository (untracked, modified, or staged files).
+
+### Add Files to Staging Area
+- **Command:** `git add <file>`
+- **Description:** Adds a specific file to the staging area.
+- **Command:** `git add .`
+- **Description:** Adds all modified and untracked files in the current directory to the staging area.
+
+### Commit Changes
+- **Command:** `git commit -m "<commit_message>"`
+- **Description:** Records changes in the repository with a message describing the changes.
+
+### Remove Files
+- **Command:** `git rm <file>`
+- **Description:** Removes a file from the repository and the working directory.
+
+## Viewing History
+
+### View Commit History
+- **Command:** `git log`
+- **Description:** Displays a list of all commits in the repository.
+- **Command:** `git log --oneline`
+- **Description:** Shows a condensed version of the commit history.
+
+### Show Changes
+- **Command:** `git diff`
+- **Description:** Shows differences between the working directory and the staging area.
+
+## Branching and Merging
+
+### Create a New Branch
+- **Command:** `git branch <branch_name>`
+- **Description:** Creates a new branch.
+
+### Switch Branches
+- **Command:** `git checkout <branch_name>`
+- **Description:** Switches to a specified branch.
+- **Command:** `git switch <branch_name>`
+- **Description:** An alternative command to switch branches.
+
+### Merge Branches
+- **Command:** `git merge <branch_name>`
+- **Description:** Merges the specified branch into the current branch.
+
+### Delete a Branch
+- **Command:** `git branch -d <branch_name>`
+- **Description:** Deletes the specified branch.
+
+## Remote Repositories
+
+### Add a Remote Repository
+- **Command:** `git remote add <name> <repository_url>`
+- **Description:** Adds a new remote repository.
+
+### Fetch Changes from Remote
+- **Command:** `git fetch <remote>`
+- **Description:** Retrieves changes from the remote repository without merging them.
+
+### Pull Changes from Remote
+- **Command:** `git pull <remote>`
+- **Description:** Fetches changes and merges them into the current branch.
+
+### Push Changes to Remote
+- **Command:** `git push <remote> <branch>`
+- **Description:** Pushes the current branch to the remote repository.
+
+## Undoing Changes
+
+### Unstage a File
+- **Command:** `git reset <file>`
+- **Description:** Removes a file from the staging area without deleting changes.
+
+### Undo the Last Commit
+- **Command:** `git reset --soft HEAD~1`
+- **Description:** Undoes the last commit but keeps changes in the staging area.
+
+### Revert a Commit
+- **Command:** `git revert <commit_hash>`
+- **Description:** Creates a new commit that undoes changes from a previous commit.
+
+## Advanced Commands
+
+### Stash Changes
+- **Command:** `git stash`
+- **Description:** Saves changes temporarily and cleans the working directory.
+
+### Apply Stashed Changes
+- **Command:** `git stash apply`
+- **Description:** Applies the most recent stash without removing it from the stash list.
+
+
+
