@@ -6,11 +6,12 @@ import org.apache.commons.lang3.StringUtils;
 
 
 public class Application {
-    public int countwords(String words){
-        String[] seperateWords=StringUtils.split(words,' ');
-        return (seperateWords==null) ? 0:seperateWords.length;
+ 
+    public int countWords(String words)
+    {
+        String[] seperateWords = StringUtils.split(words,' ');
+        return (seperateWords==null) ? 0 : seperateWords.length;
     }
-    
     public Application() {
         System.out.println ("Inside Application");
     }
@@ -27,7 +28,7 @@ public class Application {
     	System.out.println ("Starting Application");
 	Application app = new Application();
     app.greet();
-    int count=app.countwords("my name is pranav");
+    int count=app.countWords("my name is pranav");
     System.out.println(count);
     }
 }
