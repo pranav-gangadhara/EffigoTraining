@@ -13,3 +13,4 @@ import com.example.manytoone.model.Country;
 public interface CityJpaRepository extends JpaRepository<City, Integer> {
     ArrayList<City> findByCountry(Country country);
 }
+
