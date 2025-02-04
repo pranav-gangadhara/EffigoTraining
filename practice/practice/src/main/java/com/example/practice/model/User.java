@@ -9,7 +9,7 @@ public class User {
     private Long id;
     private String name;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
