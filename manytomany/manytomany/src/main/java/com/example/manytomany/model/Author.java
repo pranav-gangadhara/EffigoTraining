@@ -3,6 +3,7 @@ package com.example.manytomany.model;
 
 import java.util.* ;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -26,7 +27,7 @@ public class Author {
      @Column(name="authorname")
      private String authorName;
     
-      
+      @JsonIgnore
       @ManyToMany(mappedBy = "authors")
       private List<Book> books;
       public Author(){
