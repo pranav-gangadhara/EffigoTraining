@@ -1,12 +1,16 @@
 package com.example.manytomany.service;
 
-import java.util.ArrayList;
-import java.util.List;
+
+
+
+
+import java.util.*;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.manytomany.model.Book;
@@ -14,6 +18,9 @@ import com.example.manytomany.model.Publisher;
 import com.example.manytomany.repository.BookJpaRepository;
 import com.example.manytomany.repository.PublisherJpaRepository;
 import com.example.manytomany.repository.PublisherRepository;
+
+import jakarta.transaction.Transactional;
+
 
 @Service
 public class PublisherH2service implements PublisherRepository {
@@ -61,32 +68,41 @@ public class PublisherH2service implements PublisherRepository {
             // Fetch publisher
             Publisher publisher = publisherJpaRepository.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Publisher not found"));
+            
+            System.out.println("pub: " + publisher.getPublisherName());
 
             // Get all books associated with this publisher
             List<Book> books = bookJpaRepository.findByPublisher(publisher);
-
-            // Create a default "no publisher" publisher (can be a new Publisher object)
-            Publisher defaultPublisher = new Publisher();
-            defaultPublisher.setPublisherName("No publisher assigned");
-
+            System.out.println("books" + books);
            
-
-            // Set publisher to default for all books associated with this publisher
+            // Check if "No publisher assigned" already exists, else create it
+            Publisher defaultPublisher = publisherJpaRepository
+                    .findByPublisherName("No publisher assigned")
+                    .orElseGet(() -> {
+                        Publisher newPublisher = new Publisher();
+                        newPublisher.setPublisherName("No publisher assigned");
+                        return publisherJpaRepository.save(newPublisher); // Save first
+                    });
+            
+            // Assign the default publisher to all books
             for (Book book : books) {
                 book.setPublisher(defaultPublisher);
             }
-
+            
             // Save updated books
             bookJpaRepository.saveAll(books);
-
-            // Delete publisher after updating books
+            
+            // Delete the original publisher after updating books
             publisherJpaRepository.delete(publisher);
 
-        } catch (ResponseStatusException e) {
-            // Handle specific exception (Publisher not found)
-            throw e;
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete publisher");
+        } 
+//        catch (ResponseStatusException e) {
+//            throw e;
+//        } 
+        catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
+
+
 }

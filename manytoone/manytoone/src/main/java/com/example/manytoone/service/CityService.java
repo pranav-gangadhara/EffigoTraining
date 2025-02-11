@@ -59,36 +59,65 @@ public class CityService implements CityRepository{
         }
     }
     @Override
-    public City updateCityById(int id, City city){
-        try{
-            City orginal=cityJpaRepository.findById(id).get();
-            if(city.getCityName()!=null){
-                orginal.setCityName(city.getCityName());
+    public City updateCityById(int id, City city) {
+        try {
+            City original = cityJpaRepository.findById(id)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "City not found"));
+
+            if (city.getCityName() != null) {
+                original.setCityName(city.getCityName());
             }
-          
-            if(city.getLatitude()!=null){
-                orginal.setLatitude(city.getLatitude());
+
+            if (city.getLatitude() != null) {
+                original.setLatitude(city.getLatitude());
             }
-            if(city.getLongitude()!=null){
-                orginal.setLongitude(city.getLongitude());
+
+            if (city.getLongitude() != null) {
+                original.setLongitude(city.getLongitude());
             }
-             if(city.getPopulation()!=0){
-                orginal.setPopulation(city.getPopulation());
-             }
-             if(city.getCountry()!=null){
-                int countryId=city.getCountry().getCountryId();
-                Country country=countryJpaRepository.findById(countryId).get();
-                orginal.setCountry(country);
-                
-             }
-             cityJpaRepository.save(orginal);
-           
-           return orginal;
-        }
-        catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+            if (city.getPopulation() != 0) {
+                original.setPopulation(city.getPopulation());
+            }
+
+            // Handle country update
+            if (city.getCountry() != null) {
+                Country existingCountry = null;
+                Integer countryId = city.getCountry().getCountryId();
+                String newCountryName = city.getCountry().getCountryName();
+
+                if (countryId != null) {
+                    existingCountry = countryJpaRepository.findById(countryId).orElse(null);
+                    if (existingCountry == null) {
+                        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found with ID: " + countryId);
+                    }
+                }
+
+                // If a new country name is provided, update existing country or create a new one
+                if (newCountryName != null && !newCountryName.isEmpty()) {
+                    if (existingCountry != null) {
+                        existingCountry.setCountryName(newCountryName);
+                        countryJpaRepository.save(existingCountry);
+                    } else {
+                        Country newCountry = new Country();
+                        newCountry.setCountryName(newCountryName);
+                        existingCountry = countryJpaRepository.save(newCountry);
+                    }
+                }
+
+                // Assign the updated or newly created country
+                original.setCountry(existingCountry);
+            } else {
+                // If no country info is provided, remove association (if allowed by DB constraints)
+                original.setCountry(null);
+            }
+
+            return cityJpaRepository.save(original);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating city", e);
         }
     }
+
   @Override
   public Country getCountryByCityId(int id){
     try{
