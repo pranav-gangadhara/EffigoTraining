@@ -24,7 +24,7 @@ public class CityController {
    @Autowired
     private CityService s;
     @GetMapping("/countries/cities")
-    public ArrayList<City> getCitiescountry(){
+    public List<City> getCitiescountry(){
            return s.getCities();
     }
      @PostMapping("/countries/cities")

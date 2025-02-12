@@ -1,50 +1,41 @@
 package com.example.manytoone.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import com.example.manytoone.model.Country;
 import com.example.manytoone.service.CountryService;
-
-import java.util.ArrayList;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import org.springframework.web.bind.annotation.PutMapping;
-
-
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/countries")
 public class CountryController {
+
     @Autowired
-    private CountryService s;
-    @GetMapping("/countries")
-    public ArrayList<Country> getMethodName() {
-       return s.getCountries();
+    private CountryService countryService;
+
+    @GetMapping
+    public List<Country> getAllCountries() {
+       return countryService.getCountries();
     }
-    @PostMapping("/countries")
-    public Country postMethodName(@RequestBody Country country) {
-        return s.addCountry(country);
+
+    @PostMapping
+    public Country addCountry(@RequestBody Country country) {
+        return countryService.addCountry(country);
     }
-    @GetMapping("/countries/{countryId}")
-    public Country getMethodName(@PathVariable("countryId") int id) {
-        return s.getCountryById(id);
+
+    @GetMapping("/{countryId}")
+    public Country getCountryById(@PathVariable("countryId") int id) {
+        return countryService.getCountryById(id);
     }
-    @PutMapping("/countries/{countryId}")
-    public Country putMethodName(@RequestBody Country country,@PathVariable("countryId") int id) {
-       
-        return s.updateCountry(country, id);
+
+    @PutMapping("/{countryId}")
+    public Country updateCountry(@RequestBody Country country, @PathVariable("countryId") int id) {
+        return countryService.updateCountry(country, id);
     }
-    @DeleteMapping("/countries/{countryId}")
-    public void deleteCountry(@PathVariable("countryId") int id)
-    {
-        s.deleteCountry(id);
+
+    @DeleteMapping("/{countryId}")
+    public void deleteCountry(@PathVariable("countryId") int id) {
+        countryService.deleteCountry(id);
     }
- 
 }

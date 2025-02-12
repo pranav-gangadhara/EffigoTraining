@@ -15,7 +15,8 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="countryid")
-    private int countryId;
+    private Integer countryId;  // Change from int to Integer
+
     @Column(name="countryname")
     private String countryName;
     @Column(name="currency")
