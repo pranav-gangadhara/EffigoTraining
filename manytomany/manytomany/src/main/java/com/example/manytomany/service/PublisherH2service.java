@@ -1,15 +1,9 @@
 package com.example.manytomany.service;
 
-
-
-
-
 import java.util.*;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,7 +15,6 @@ import com.example.manytomany.repository.PublisherRepository;
 
 import jakarta.transaction.Transactional;
 
-
 @Service
 public class PublisherH2service implements PublisherRepository {
 
@@ -32,10 +25,11 @@ public class PublisherH2service implements PublisherRepository {
     private BookJpaRepository bookJpaRepository;
 
     @Override
-    public ArrayList<Publisher> getPublishers() {List<Publisher> publisherList = publisherJpaRepository.findAll();
-    // Remove the default "No publisher assigned" publisher if present
-    publisherList.removeIf(publisher -> "No publisher assigned".equals(publisher.getPublisherName()));
-    return new ArrayList<>(publisherList);
+    public ArrayList<Publisher> getPublishers() {
+        List<Publisher> publisherList = publisherJpaRepository.findAll();
+        // Remove the default "No publisher assigned" publisher if present
+        publisherList.removeIf(publisher -> "No publisher assigned".equals(publisher.getPublisherName()));
+        return new ArrayList<>(publisherList);
     }
 
     @Override
@@ -46,6 +40,11 @@ public class PublisherH2service implements PublisherRepository {
 
     @Override
     public Publisher addPublisher(Publisher publisher) {
+        // Check if a publisher with the same name already exists
+        Optional<Publisher> existingPublisher = publisherJpaRepository.findByPublisherName(publisher.getPublisherName());
+        if (existingPublisher.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Publisher already exists");
+        }
         return publisherJpaRepository.save(publisher);
     }
 
@@ -69,11 +68,8 @@ public class PublisherH2service implements PublisherRepository {
             Publisher publisher = publisherJpaRepository.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Publisher not found"));
             
-            System.out.println("pub: " + publisher.getPublisherName());
-
             // Get all books associated with this publisher
             List<Book> books = bookJpaRepository.findByPublisher(publisher);
-            System.out.println("books" + books);
            
             // Check if "No publisher assigned" already exists, else create it
             Publisher defaultPublisher = publisherJpaRepository
@@ -95,14 +91,8 @@ public class PublisherH2service implements PublisherRepository {
             // Delete the original publisher after updating books
             publisherJpaRepository.delete(publisher);
 
-        } 
-//        catch (ResponseStatusException e) {
-//            throw e;
-//        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
-
-
 }

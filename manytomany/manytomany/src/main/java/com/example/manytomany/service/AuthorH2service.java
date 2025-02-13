@@ -2,10 +2,8 @@ package com.example.manytomany.service;
 
 import java.util.*;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,128 +16,104 @@ import com.example.manytomany.repository.BookJpaRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-public class AuthorH2service implements AuthorRepository{
+public class AuthorH2service implements AuthorRepository {
+
     @Autowired
     private AuthorJpaRepository authorJpaRepository;
     
     @Autowired
     private BookJpaRepository bookJpaRepository;
+
     @Override
-    public ArrayList<Author> getAuthors(){
-        List<Author> authorList = authorJpaRepository.findAll();
-        ArrayList<Author> authors = new ArrayList<>(authorList);
-        return authors;
+    public ArrayList<Author> getAuthors() {
+        return new ArrayList<>(authorJpaRepository.findAll());
     }
+
     @Override
-    public Author getAuthorById(int id){
-        try{
-            Author author=authorJpaRepository.findById(id).get();
-        return author;
-        }
-        catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+    public Author getAuthorById(int id) {
+        return authorJpaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found"));
     }
+
     @Transactional
     @Override
     public Author addAuthor(Author author) {
-        // Initialize the books list if it is null
+        if (authorJpaRepository.findByAuthorNameIgnoreCase(author.getAuthorName()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Author with the same name already exists");
+        }
+
         if (author.getBooks() == null) {
             author.setBooks(new ArrayList<>());
         }
 
-        List<Integer> ids = new ArrayList<>();
-
-        // Collect book ids from the author's books list
-        for (Book book : author.getBooks()) {
-            if (book != null) {
-                ids.add(book.getId());
-            }
-        }
-
-        // Find all books by their ids from the repository
-        List<Book> books = bookJpaRepository.findAllById(ids);
-
-        // Set the books list in the author (this step might be redundant if the books are already set)
+        List<Book> books = bookJpaRepository.findAllById(
+            author.getBooks().stream().map(Book::getId).toList()
+        );
         author.setBooks(books);
 
-        // Loop through the books and add the author to each book's authors list
         for (Book book : books) {
             if (book.getAuthors() == null) {
-                book.setAuthors(new ArrayList<>());  // Initialize the authors list if it's null
+                book.setAuthors(new ArrayList<>());
             }
-            // Avoid adding duplicate authors using stream check
-            if (book.getAuthors().stream().noneMatch(existingAuthor -> existingAuthor.equals(author))) {
-                book.getAuthors().add(author);  // Add the author to the book's authors list
+            if (book.getAuthors().stream().noneMatch(existing -> existing.equals(author))) {
+                book.getAuthors().add(author);
             }
         }
 
-        // Save the updated list of books (with author added to each book)
         bookJpaRepository.saveAll(books);
-
-        // Save the author entity after linking the books
         return authorJpaRepository.save(author);
     }
 
+    @Transactional
     @Override
     public Author updateAuthor(int id, Author author) {
-        try{
-        Author orginal=authorJpaRepository.findById(id).get();
-       
+        Author original = authorJpaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found"));
 
-        if(author.getAuthorName()!=null){
-            orginal.setAuthorName(author.getAuthorName());
+        if (author.getAuthorName() != null && authorJpaRepository
+                .findByAuthorNameIgnoreCase(author.getAuthorName())
+                .filter(a -> a.getId() != id).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Author with the same name already exists");
         }
-        if(author.getBooks()!=null){
-             
-            List<Book> books1= orginal.getBooks();
-                for (Book book : books1) {
-                    book.getAuthors().remove(orginal);
-                }
-                bookJpaRepository.saveAll(books1);
-            List<Integer> ids=new ArrayList<>();
-              for(Book book:author.getBooks()){
-                ids.add(book.getId());
-              }
-              
-              List<Book> books=bookJpaRepository.findAllById(ids);
-              orginal.setBooks(books);
-              for(Book book:books){
-                book.getAuthors().add(orginal);
-              }
-              bookJpaRepository.saveAll(books);
+        original.setAuthorName(author.getAuthorName());
 
+        if (author.getBooks() != null) {
+            for (Book book : original.getBooks()) {
+                book.getAuthors().remove(original);
+            }
+            bookJpaRepository.saveAll(original.getBooks());
+
+            List<Book> books = bookJpaRepository.findAllById(
+                author.getBooks().stream().map(Book::getId).toList()
+            );
+            original.setBooks(books);
+            for (Book book : books) {
+                book.getAuthors().add(original);
+            }
+            bookJpaRepository.saveAll(books);
         }
-        return  authorJpaRepository.save(orginal);
+
+        return authorJpaRepository.save(original);
     }
-        catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-    }
+
+    @Transactional
     @Override
     public void deleteAuthor(int id) {
-        try{
-        Author author=authorJpaRepository.findById(id).get();
-        List<Book> books=author.getBooks();
-        for(Book book :books){
+        Author author = authorJpaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found"));
+
+        for (Book book : author.getBooks()) {
             book.getAuthors().remove(author);
         }
-         bookJpaRepository.saveAll(books);
+        bookJpaRepository.saveAll(author.getBooks());
 
         authorJpaRepository.deleteById(id);
     }
-    catch(Exception e){
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-    }
-    }
+
     @Override
-    public List<Book> getAuthorBooks(int id){
-          try{
-            Author author=authorJpaRepository.findById(id).get();
-            return author.getBooks();
-          }
-          catch(Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-          }
+    public List<Book> getAuthorBooks(int id) {
+        return authorJpaRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found"))
+                .getBooks();
     }
 }
