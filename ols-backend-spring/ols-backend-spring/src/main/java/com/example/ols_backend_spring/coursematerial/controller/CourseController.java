@@ -12,6 +12,7 @@ import com.example.ols_backend_spring.coursematerial.service.CourseService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins="*")
 public class CourseController {
     @Autowired
     private CourseService courseService;

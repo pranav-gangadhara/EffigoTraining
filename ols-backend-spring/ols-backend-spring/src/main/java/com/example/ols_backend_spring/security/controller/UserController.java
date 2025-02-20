@@ -20,6 +20,7 @@ import com.example.ols_backend_spring.security.service.UserInfoService;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(origins="*")
 public class UserController {
 
     @Autowired

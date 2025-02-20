@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-
     @Id
     private Long userId;
 
@@ -27,7 +26,7 @@ public class User {
     private String userEmail;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    @JsonIgnore
+    @JsonIgnoreProperties("user")  // Prevent User → Order → User loop
     private List<Order> orders = new ArrayList<>();
 
     @ManyToMany
@@ -37,6 +36,6 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-//    @JsonIgnore
+    @JsonIgnoreProperties("users")  // Prevent Course → User → Course loop
     private List<Course> courses = new ArrayList<>();
 }

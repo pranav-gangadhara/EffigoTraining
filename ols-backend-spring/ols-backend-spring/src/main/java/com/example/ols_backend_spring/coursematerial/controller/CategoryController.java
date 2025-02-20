@@ -11,6 +11,7 @@ import com.example.ols_backend_spring.coursematerial.service.CategoryService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins="*")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

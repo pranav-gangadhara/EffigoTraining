@@ -35,6 +35,6 @@ public class Order {
     private Course course;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties("order")
+    @JsonIgnoreProperties("order")  // Prevent Order → Payment → Order loop
     private Payment payment;
 }

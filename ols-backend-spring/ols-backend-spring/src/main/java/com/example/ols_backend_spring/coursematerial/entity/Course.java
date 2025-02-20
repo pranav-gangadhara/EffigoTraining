@@ -40,6 +40,6 @@ public class Course {
     private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties("courses")
+    @JsonIgnoreProperties({"course", "user"})  // Ignore course and user references in Order
     private List<Order> orders = new ArrayList<>();
 }
