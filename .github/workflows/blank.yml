@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: ACCELQ Github-A Connect
+        uses: accelQ-Inc/accelq-ci-github-actions@v1.4
+        with:
+          # Your ACCELQ Application URL in the exact following format: https://<hostname>:<port_num>
+          appURL: https://training.accelq.io/
+          
+          # Your ACCELQ User ID
+          userName: sai.pranav@accelq.com
+
+          # API key available in Profile section of ACCELQ
+          apiKey: dusg4osVw8qwcTETr8UkEmG8u9p0eDLPTPyaeePmqOk
+
+          # Tenant Code displayed in the Profile section of ACCELQ
+          tenantCode: accelqtraining
+
+          # This ID should come from the CI job you saved in ACCELQ application
+          jobId: 85918
+
+          # Optional fields below:
+          # runParam: '{"username": "John Todd", "password": "bxW&=UVw"}'
+          # proxyHost: "<YOUR_PROXY_HOST>"
+          # proxyPort: "<YOUR_PROXY_PORT>"
+          # stepFailureThreshold: -1
+          # maxWaitTimeInMins: 15
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run a one-line script
+        run: echo "Hello, world!"
+
+      - name: Run a multi-line script
+        run: |
+          echo "Add other actions to build,"
+          echo "test, and deploy your project."
