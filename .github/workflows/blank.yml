@@ -28,10 +28,10 @@ jobs:
           tenantCode: accelqtraining
 
           # This ID should come from the CI job you saved in ACCELQ application
-          jobId: 85918
+          jobId: 86310
 
           # Optional fields below:
-          # runParam: '{"username": "John Todd", "password": "bxW&=UVw"}'
+          runParam: '{"User Balance": "1234"}'
           # proxyHost: "<YOUR_PROXY_HOST>"
           # proxyPort: "<YOUR_PROXY_PORT>"
           # stepFailureThreshold: -1
